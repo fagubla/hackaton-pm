@@ -33,10 +33,15 @@
               sm="4"
               class="custom-btn pb-2"
               variant="outline-danger"
-              @click="textGPT = ''"
+              @click="reset"
             >
               Reset
             </b-button>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col md="8" offset-md="2">
+            <TypeView :dataJson="dataJson" />
           </b-col>
         </b-row>
       </b-container>
@@ -46,13 +51,69 @@
 
 <script>
 import mixin from "./mixin/buttonMixin";
+import TypeView from "./typeView.vue";
+
 export default {
   name: "home-view",
   mixins: [mixin],
+  components: {
+    TypeView,
+  },
+  methods: {
+    reset() {
+      this.textGPT = "";
+      this.dataJson = "";
+    },
+  },
   data() {
     return {
       text: "Describe your form:",
       textGPT: "",
+      dataJson: {
+        title: "Leave Absence Form",
+        type: "object",
+        properties: {
+          employee_name: {
+            type: "string",
+            description: "The name of the employee requesting leave",
+          },
+          start_date: {
+            type: "string",
+            format: "date",
+            description: "The date the employee wants to start their leave",
+          },
+          end_date: {
+            type: "string",
+            format: "date",
+            description: "The date the employee wants to end their leave",
+          },
+          reason: {
+            type: "string",
+            description: "The reason for the leave request",
+          },
+          contact_info: {
+            type: "object",
+            properties: {
+              phone: {
+                type: "string",
+                description: "The employee's phone number",
+              },
+              email: {
+                type: "string",
+                format: "email",
+                description: "The employee's email address",
+              },
+            },
+          },
+        },
+        required: [
+          "employee_name",
+          "start_date",
+          "end_date",
+          "reason",
+          "contact_info",
+        ],
+      },
     };
   },
 };

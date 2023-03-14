@@ -3,9 +3,6 @@ var mixin = {
     generateForm: function (textGPT) {
       console.log(textGPT);
     },
-    reset: function () {
-      return "";
-    },
   },
 };
 
